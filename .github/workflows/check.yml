@@ -15,9 +15,8 @@ jobs:
           channel: stable
           cache: true
       - run: flutter pub get
-      - run: dart format --output=none --set-exit-if-changed lib test integration_test
+      - run: dart format --output=none --set-exit-if-changed lib test integration_test tool
       - run: flutter analyze
       - run: flutter test
-      - run: python3 -m unittest discover -s tool/tests
-      - run: python3 tool/prepare_web.py
+      - run: dart run tool/prepare_web.dart
       - run: flutter build web --release

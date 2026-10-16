@@ -33,9 +33,9 @@ No API key or inference server is needed. Models run on the device; network acce
 ### Web
 
 ```sh
-python3 tool/prepare_web.py
+dart run tool/prepare_web.dart
 flutter build web --release
-python3 tool/serve_web.py
+dart run tool/serve_web.dart
 ```
 
 Open **http://127.0.0.1:8765** in a WebGPU-capable browser. Runtime files are pinned and checksum-verified; they are not committed to Git.
@@ -86,10 +86,9 @@ See [how it works](docs/how-it-works.md) for the pipeline and [platform notes](d
 ## Check changes
 
 ```sh
-dart format --output=none --set-exit-if-changed lib test integration_test
+dart format --output=none --set-exit-if-changed lib test integration_test tool
 flutter analyze
 flutter test
-python3 -m unittest discover -s tool/tests
 ```
 
 The automated checks do not download models. An optional real-model smoke test exercises the actual question-to-answer flow:

@@ -27,7 +27,7 @@ A fresh native checkout regenerates local Flutter/Gradle files during `flutter p
 
 ## Browser hosting
 
-Run `tool/prepare_web.py` before building the web app. It installs a pinned runtime only after checking the manifest and each SHA-256 digest. Existing matching files are reused. Never commit the runtime or model caches.
+Run `tool/prepare_web.dart` before building the web app. It installs a pinned runtime only after checking the manifest and each SHA-256 digest. Existing matching files are reused. Never commit the runtime or model caches.
 
 Serve the built app with COOP/COEP response headers, on HTTPS or localhost. The development server defaults to localhost port 8765. WebGPU, microphone permissions and memory limits depend on the browser/device. Browser caches can be evicted.
 
