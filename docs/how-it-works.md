@@ -14,7 +14,7 @@ flowchart LR
 
 ## Search, then answer
 
-`retrieve` uses EmbeddingGemma to embed the three notes and the question. Its inputs use the model’s document and query prefixes. Vectors are normalized, so a dot product ranks their similarity.
+`retrieve` uses EmbeddingGemma to embed the three notes and the question. Its inputs use the model’s document and query prefixes. Vectors are normalized, so a dot product ranks their similarity. `FestivalService` keeps the fixed note vectors in a session cache. Each question still loads and disposes the embedding engine, but only the first successful search embeds the notes. The cache contains vectors, never a native engine.
 
 `answer` gives Qwen3.5 0.8B the top two notes, the fictional scene context and the question. The system prompt asks for a brief reply and an admission when facts are missing. Prompts reduce mistakes but do not enforce factual correctness. The source cards show the notes verbatim.
 
@@ -37,6 +37,8 @@ SDXS generates a 512 × 512 image in one step. The optional SD-Turbo profile use
 This is text-to-image generation, not a screenshot of the game and not image-conditioned character rendering. It can miss characters or actions.
 
 ## State and lifetime
+
+`NotebookController` exposes read-only state and explicit actions. Widgets call those actions rather than changing busy flags, answers or audio directly. `FestivalService` is injectable, so tests can exercise a complete turn without loading models. The screen owns microphone and playback lifetime; the cards in `widgets/` render state and forward user actions.
 
 `NotebookController.work` admits one operation at a time, clears transient errors, and restores the UI after failures. Optional speech/image failures preserve the text answer. Model functions own loading and disposal; the UI owns playback and microphone lifetime.
 

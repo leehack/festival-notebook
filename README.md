@@ -60,13 +60,16 @@ final hits = await retrieve(question);
 final reply = await answer(question, hits);
 ```
 
-`retrieve` embeds the notes and question, then ranks their normalized vectors. `answer` supplies the best two notes and the scene context to the language model. Each function releases its engine in `finally`, keeping large models from accumulating in memory.
+`retrieve` embeds the notes and question, then ranks their normalized vectors. The app caches the three note vectors for the session; later questions only need a new query embedding. `answer` supplies the best two notes and the scene context to the language model. Each function releases its engine in `finally`, keeping large models from accumulating in memory.
 
 | File | Responsibility |
 | --- | --- |
 | [festival_ai.dart](lib/festival_ai.dart) | Model sources, retrieval, grounded answers, speech and images |
 | [notebook_controller.dart](lib/notebook_controller.dart) | One operation at a time, progress, errors and output state |
-| [main.dart](lib/main.dart) | Responsive village UI and playback |
+| [festival_service.dart](lib/festival_service.dart) | Injectable AI boundary and session note-vector cache |
+| [main.dart](lib/main.dart) | App entry point and theme |
+| [notebook_screen.dart](lib/notebook_screen.dart) | Screen composition, microphone and playback lifetime |
+| [widgets/](lib/widgets/) | Question, answer, voice settings, illustration and source cards |
 | [microphone.dart](lib/microphone.dart) | Bounded in-memory recording and WAV encoding |
 | [silence_detector.dart](lib/silence_detector.dart) | Energy-based end-of-speech detection |
 | [voice_recorder.dart](lib/voice_recorder.dart) | Record, preview and apply a reference voice |

@@ -28,5 +28,11 @@ void main() {
     expect(answer.length, lessThan(200));
     expect(answer.toLowerCase(), isNot(contains("hasn't started")));
     expect(answer.toLowerCase(), isNot(contains('half past five')));
+
+    // A second turn uses the cached note vectors with a fresh engine.
+    await screen.model.ask('It is raining. Where is the Berry Festival now?');
+    expect(screen.model.error, isNull);
+    expect(screen.model.reply.toLowerCase(), contains('village hall'));
+    expect(screen.model.hits.first.index, 0);
   });
 }

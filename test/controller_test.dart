@@ -3,12 +3,14 @@ import 'dart:async';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:festival_notebook/notebook_controller.dart';
 
+import 'support/fake_festival_service.dart';
+
 void main() {
   test(
     'An optional-step failure preserves the answer and releases busy state',
     () async {
-      final model = NotebookController();
-      model.reply = 'The festival is in the village hall.';
+      final model = NotebookController(service: FakeFestivalService());
+      await model.ask('Where is the festival?');
       await model.work(() async {
         throw StateError('test failure');
       });
@@ -18,6 +20,24 @@ void main() {
       model.dispose();
     },
   );
+  test(
+    'Ending an old input does not unlock an active model operation',
+    () async {
+      final model = NotebookController();
+      expect(model.beginInput('Recording'), isTrue);
+      expect(model.beginInput('Another recording'), isFalse);
+      model.endInput();
+      final gate = Completer<void>();
+      final work = model.work(() => gate.future);
+      model.endInput();
+      expect(model.busy, isTrue);
+      gate.complete();
+      await work;
+      expect(model.busy, isFalse);
+      model.dispose();
+    },
+  );
+
   test('Only one operation runs at a time', () async {
     final model = NotebookController();
     final gate = Completer<void>();

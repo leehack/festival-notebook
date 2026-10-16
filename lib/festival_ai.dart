@@ -251,8 +251,25 @@ Future<Uint8List> illustrate({
   }
 }
 
+/// Keeps only the fixed note vectors, never a model or native engine.
+class NoteEmbeddingCache {
+  Future<List<List<double>>>? _vectors;
+
+  Future<List<List<double>>> getOrLoad(
+    Future<List<List<double>>> Function() load,
+  ) async {
+    try {
+      return await (_vectors ??= load());
+    } catch (_) {
+      _vectors = null;
+      rethrow;
+    }
+  }
+}
+
 Future<List<({int index, double score})>> retrieve(
   String question, {
+  NoteEmbeddingCache? cache,
   ModelDownloadProgressCallback? onProgress,
 }) async {
   final engine = await LlamaEngine.load(
@@ -267,10 +284,13 @@ Future<List<({int index, double score})>> retrieve(
     onProgress: onProgress,
   );
   try {
-    final docs = await engine.embedBatch(
+    Future<List<List<double>>> embedNotes() => engine.embedBatch(
       notes.map((n) => 'title: ${n.title} | text: ${n.text}').toList(),
       normalize: true,
     );
+    final docs = await (cache == null
+        ? embedNotes()
+        : cache.getOrLoad(embedNotes));
     final query = await engine.embed(
       'task: search result | query: $question',
       normalize: true,

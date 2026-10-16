@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:festival_notebook/main.dart';
 
+import 'support/fake_festival_service.dart';
+
 void main() {
   for (final width in [1200.0, 390.0]) {
     testWidgets('Notebook fits a $width pixel window', (tester) async {
@@ -9,7 +11,7 @@ void main() {
       tester.view.devicePixelRatio = 1;
       addTearDown(tester.view.resetPhysicalSize);
       addTearDown(tester.view.resetDevicePixelRatio);
-      await tester.pumpWidget(const FestivalApp());
+      await tester.pumpWidget(FestivalApp(service: FakeFestivalService()));
       await tester.pumpAndSettle();
       expect(find.byKey(const Key('question')), findsOneWidget);
       expect(find.text('First, ask Mo about the rain.'), findsOneWidget);
@@ -32,8 +34,7 @@ void main() {
       expect(find.byType(ActionChip), findsNothing);
       expect(find.text('Transcribe sample'), findsNothing);
       final dynamic screen = tester.state(find.byType(NotebookScreen));
-      screen.model.reply = 'June and Pip are rehearsing beside the stage.';
-      screen.model.update();
+      await screen.model.ask('Where is the festival?');
       await tester.pumpAndSettle();
       final answer = tester.getTopLeft(find.text('A WORD FROM MO'));
       final illustration = tester.getTopLeft(find.text('Mo’s illustration'));
