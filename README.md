@@ -6,6 +6,8 @@ A small Flutter app where Dash asks Mo, the village baker, for help with the Ber
 
 Rain interrupts the festival. Ask where to go, check the notes Mo used, hear his reply, and draw the conversation. Type a question, speak into the microphone, or try Dash’s bundled sample.
 
+[Try the web app](https://leehack.github.io/festival-notebook/) in a desktop WebGPU-capable browser. The first visit may reload once to enable the local runtime. Models download when you use a feature.
+
 ## Run it
 
 Developed and tested with **Flutter 3.47.7 / Dart 3.13.5**. Use a supported native host toolchain or a WebGPU-capable browser. Dependencies and model revisions are pinned.

@@ -41,6 +41,8 @@
     For more details:
     * https://docs.flutter.dev/platform-integration/web/initialization
   -->
+  <!-- GitHub Pages cannot set COOP/COEP headers; this helper isolates the page. -->
+  <script src="coi-serviceworker.js"></script>
   <script type="module" src="bridge.js"></script>
   <script src="flutter_bootstrap.js" async></script>
 </body>

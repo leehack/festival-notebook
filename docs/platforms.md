@@ -36,3 +36,9 @@ Serve the built app with COOP/COEP response headers, on HTTPS or localhost. The 
 Separate model download, cached loading, synthesis and playback. A complete-audio timing is not time to first streamed audio. Process RSS is not total GPU memory. A successful transcription of generated speech checks its words, not voice naturalness or speaker similarity.
 
 For phones, start with text, then enable one optional modality at a time. This example releases models between stages rather than keeping several large engines resident.
+
+## GitHub Pages
+
+The public demo is https://leehack.github.io/festival-notebook/. The Pages workflow builds with `/festival-notebook/` as its base path and deploys the static output. Models remain on their upstream hosts and download on demand.
+
+GitHub Pages does not support our custom response headers. The bundled MIT-licensed `coi-serviceworker` (upstream commit `7b1d2a092d0d2dd2b7270b6f12f13605de26f214`) adds isolation through a service worker and may reload the first visit. It is scoped to this app directory and does not cache responses. Flutter offline service-worker generation is disabled to avoid competing workers. Browsers that disable service workers or lack WebGPU cannot run this demo.

@@ -1,5 +1,5 @@
 // Keep the browser runtime pinned alongside pubspec.lock.
-const base = new URL('./runtime/', window.location.href).href;
+const base = new URL('./runtime/', document.baseURI).href;
 window.__llamadartBridgeReadyPromise = (async () => {
   try {
     const mod = await import(base + 'llama_webgpu_bridge.js');
