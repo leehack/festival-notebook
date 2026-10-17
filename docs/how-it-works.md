@@ -12,7 +12,20 @@ flowchart LR
   E --> H[Optional illustration]
 ```
 
+## Read one task at a time
+
+- [answer.dart](../lib/ai/answer.dart): select two notes and build Mo’s prompt.
+- [search.dart](../lib/ai/search.dart): embed, compare and rank the notes.
+- [transcribe.dart](../lib/ai/transcribe.dart): turn a WAV into text.
+- [speak.dart](../lib/ai/speak.dart): turn a reply and reference voice into a WAV.
+- [illustrate.dart](../lib/ai/illustrate.dart): turn a scene prompt into a PNG.
+
+The shared [text generator](../lib/ai/generate_text.dart) handles loading, streaming and disposal for answers and translations. [Image prompt preparation](../lib/ai/image_prompt.dart) holds the character descriptions and translation step. [models.dart](../lib/ai/models.dart) contains all pinned model sources and runtime settings, separate from the task logic.
+
+Each task is an ordinary Dart function. Start there; the service and controller connect those functions to the app and make the flow testable.
+
 ## Search, then answer
+
 
 `retrieve` uses EmbeddingGemma to embed the three notes and the question. Its inputs use the model’s document and query prefixes. Vectors are normalized, so a dot product ranks their similarity. `FestivalService` keeps the fixed note vectors in a session cache. Each question still loads and disposes the embedding engine, but only the first successful search embeds the notes. The cache contains vectors, never a native engine.
 

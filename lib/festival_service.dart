@@ -2,37 +2,42 @@ import 'dart:typed_data';
 
 import 'package:llamadart/llamadart.dart';
 
-import 'festival_ai.dart' as ai;
+import 'ai/answer.dart' as chat;
+import 'ai/image_prompt.dart' as scenes;
+import 'ai/illustrate.dart' as images;
+import 'ai/search.dart' as search;
+import 'ai/speak.dart' as speech;
+import 'ai/transcribe.dart' as transcription;
 
-typedef NoteHit = ({int index, double score});
+import 'festival_data.dart';
 
-/// Injectable boundary for the controller. The SDK examples stay in festival_ai.
+/// The controller uses this small boundary; each SDK example lives in ai/.
 class FestivalService {
-  final _notes = ai.NoteEmbeddingCache();
+  final _notes = search.NoteEmbeddingCache();
 
   Future<List<NoteHit>> retrieve(
     String question, {
     ModelDownloadProgressCallback? onProgress,
-  }) => ai.retrieve(question, cache: _notes, onProgress: onProgress);
+  }) => search.retrieve(question, cache: _notes, onProgress: onProgress);
 
   Future<String> answer(
     String question,
     List<NoteHit> hits, {
     required String language,
     ModelDownloadProgressCallback? onProgress,
-  }) => ai.answer(question, hits, language: language, onProgress: onProgress);
+  }) => chat.answer(question, hits, language: language, onProgress: onProgress);
 
   Future<String> transcribe(
     Uint8List bytes, {
     ModelDownloadProgressCallback? onProgress,
-  }) => ai.transcribe(bytes, onProgress: onProgress);
+  }) => transcription.transcribe(bytes, onProgress: onProgress);
 
   Future<Uint8List> speak(
     String reply, {
     required Uint8List speakerReference,
     required String language,
     ModelDownloadProgressCallback? onProgress,
-  }) => ai.speak(
+  }) => speech.speak(
     reply,
     speakerReference: speakerReference,
     language: language,
@@ -40,16 +45,10 @@ class FestivalService {
   );
 
   Future<String> describeScene(
-    String question,
     String reply, {
     required String language,
     ModelDownloadProgressCallback? onProgress,
-  }) => ai.describeScene(
-    question,
-    reply,
-    language: language,
-    onProgress: onProgress,
-  );
+  }) => scenes.describeScene(reply, language: language, onProgress: onProgress);
 
   Future<Uint8List> illustrate({
     required bool detailed,
@@ -57,7 +56,7 @@ class FestivalService {
     required String prompt,
     ModelDownloadProgressCallback? onProgress,
     void Function(String)? onPhase,
-  }) => ai.illustrate(
+  }) => images.illustrate(
     detailed: detailed,
     seed: seed,
     prompt: prompt,

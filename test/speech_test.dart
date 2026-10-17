@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:llamadart/llamadart.dart';
-import 'package:festival_notebook/festival_ai.dart';
+import 'package:festival_notebook/ai/speak.dart';
 
 class FakeSpeech extends Fake implements TextToSpeechEngine {
   bool truncated = false;

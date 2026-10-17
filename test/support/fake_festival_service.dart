@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:festival_notebook/festival_service.dart';
+import 'package:festival_notebook/festival_data.dart';
 import 'package:llamadart/llamadart.dart';
 
 class FakeFestivalService extends FestivalService {
@@ -51,7 +52,6 @@ class FakeFestivalService extends FestivalService {
 
   @override
   Future<String> describeScene(
-    String question,
     String reply, {
     required String language,
     ModelDownloadProgressCallback? onProgress,

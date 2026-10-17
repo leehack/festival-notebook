@@ -53,9 +53,13 @@ Cross-Origin-Embedder-Policy: require-corp
 
 ## Read the code
 
-Start with [lib/festival_ai.dart](lib/festival_ai.dart). The core flow is:
+Start with [answer.dart](lib/ai/answer.dart): it selects two notes and asks Mo to reply. Then read [search.dart](lib/ai/search.dart) to see how those notes are chosen. The core flow is:
 
 ```dart
+import 'package:festival_notebook/ai/search.dart';
+import 'package:festival_notebook/ai/answer.dart';
+
+// Inside an async function:
 final hits = await retrieve(question);
 final reply = await answer(question, hits);
 ```
@@ -64,7 +68,9 @@ final reply = await answer(question, hits);
 
 | File | Responsibility |
 | --- | --- |
-| [festival_ai.dart](lib/festival_ai.dart) | Model sources, retrieval, grounded answers, speech and images |
+| [ai/](lib/ai/) | One short example per task: search, answer, transcribe, speak and illustrate |
+| [ai/models.dart](lib/ai/models.dart) | Model downloads, pinned revisions and runtime settings |
+| [festival_data.dart](lib/festival_data.dart) | Festival notes, scene context and language choices |
 | [notebook_controller.dart](lib/notebook_controller.dart) | One operation at a time, progress, errors and output state |
 | [festival_service.dart](lib/festival_service.dart) | Injectable AI boundary and session note-vector cache |
 | [main.dart](lib/main.dart) | App entry point and theme |

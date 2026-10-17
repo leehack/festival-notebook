@@ -7,6 +7,6 @@
 
 The original illustration and synthetic audio are included under the repository’s MIT license. Template and third-party assets retain their upstream terms. User recordings and generated model outputs are not committed to this repository.
 
-Model identifiers and immutable revisions are in `lib/festival_ai.dart`. Each model is downloaded from its provider on demand; consult that provider’s model card and license. A code license does not change a model’s license.
+Model identifiers and immutable revisions are in `lib/ai/models.dart`. Each model is downloaded from its provider on demand; consult that provider’s model card and license. A code license does not change a model’s license.
 
 `docs/screenshot.png` is an actual macOS integration-test capture from this example, showing a model-generated reply.

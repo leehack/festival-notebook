@@ -1,4 +1,4 @@
-import '../festival_ai.dart' as ai;
+import '../festival_data.dart' as data;
 import 'package:flutter/material.dart';
 import '../notebook_controller.dart';
 import 'village_style.dart';
@@ -119,7 +119,7 @@ class QuestionCard extends StatelessWidget {
               value: 'auto',
               child: Text('Auto · Korean / English'),
             ),
-            for (final language in ai.languages.entries)
+            for (final language in data.languages.entries)
               DropdownMenuItem(
                 value: language.key,
                 child: Text(language.value),

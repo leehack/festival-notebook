@@ -1,4 +1,4 @@
-import '../festival_ai.dart' as ai;
+import '../festival_data.dart' as data;
 import 'package:flutter/material.dart';
 import '../notebook_controller.dart';
 import 'village_style.dart';
@@ -82,7 +82,7 @@ class NotebookNotes extends StatelessWidget {
                           const SizedBox(width: 8),
                           Expanded(
                             child: Text(
-                              ai.notes[i].title,
+                              data.notes[i].title,
                               style: const TextStyle(
                                 fontWeight: FontWeight.w700,
                                 fontSize: 13,
@@ -93,7 +93,7 @@ class NotebookNotes extends StatelessWidget {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        ai.notes[i].text,
+                        data.notes[i].text,
                         style: const TextStyle(fontSize: 13, height: 1.5),
                       ),
                     ],
@@ -118,23 +118,23 @@ class NotebookNotes extends StatelessWidget {
             for (final step in [
               (
                 'Find the rain plan',
-                'EmbeddingEngine compares Dash’s question with the three notes.\nfestival_ai.dart → retrieve()',
+                'EmbeddingEngine compares Dash’s question with the three notes.\nai/search.dart → retrieve()',
               ),
               (
                 'Write Mo’s answer',
-                'LlamaEngine answers using the selected notes.\nfestival_ai.dart → answer()',
+                'LlamaEngine answers using the selected notes.\nai/answer.dart → answer()',
               ),
               (
                 'Optional voice input',
-                'SpeechToTextEngine turns a WAV recording into editable text.\nfestival_ai.dart → transcribe()',
+                'SpeechToTextEngine turns a WAV recording into editable text.\nai/transcribe.dart → transcribe()',
               ),
               (
                 'Optional spoken answer',
-                'TextToSpeechEngine makes a WAV you can replay.\nfestival_ai.dart → speak()',
+                'TextToSpeechEngine makes a WAV you can replay.\nai/speak.dart → speak()',
               ),
               (
                 'Optional illustration',
-                'LlamaEngine describes the exchange; ImageGenerationEngine draws that prompt on native platforms.\nfestival_ai.dart → illustrate()',
+                'LlamaEngine describes the exchange; ImageGenerationEngine draws that prompt on native platforms.\nai/illustrate.dart → illustrate()',
               ),
             ])
               ListTile(

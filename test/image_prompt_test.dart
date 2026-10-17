@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:festival_notebook/festival_ai.dart';
+import 'package:festival_notebook/ai/image_prompt.dart';
 
 void main() {
   test('Action stays first and names become visible animal descriptions', () {

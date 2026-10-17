@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:festival_notebook/festival_ai.dart';
+import 'package:festival_notebook/festival_data.dart';
 
 void main() {
   test('Hangul selects Korean while English keeps the English default', () {

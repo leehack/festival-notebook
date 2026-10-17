@@ -4,10 +4,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:llamadart/llamadart.dart';
 
-import 'festival_ai.dart' as ai;
+import 'festival_data.dart' as data;
 import 'festival_service.dart';
 
-/// UI state lives here; the model calls live in festival_ai.dart.
+/// Owns state changes; FestivalService runs the AI steps.
 class NotebookController extends ChangeNotifier {
   NotebookController({FestivalService? service})
     : _service = service ?? FestivalService();
@@ -181,7 +181,7 @@ class NotebookController extends ChangeNotifier {
   Future<void> ask(String text) => work(() async {
     if (text.trim().isEmpty) return;
     _question = text.trim();
-    _replyLanguage = _languageOverride ?? ai.questionLanguage(_question);
+    _replyLanguage = _languageOverride ?? data.questionLanguage(_question);
     _reply = '';
     _hits = [];
     _audioBytes = null;
@@ -247,7 +247,6 @@ class NotebookController extends ChangeNotifier {
     final prompt = await stage(
       'Imagining your conversation',
       () => _service.describeScene(
-        _question,
         _reply,
         language: _replyLanguage,
         onProgress: download,

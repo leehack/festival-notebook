@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:festival_notebook/notebook_controller.dart';
-import 'package:festival_notebook/festival_ai.dart';
+import 'package:festival_notebook/ai/search.dart';
 import 'support/fake_festival_service.dart';
 
 void main() {
